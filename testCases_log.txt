@@ -1,0 +1,83 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< org.revature:Challenges >-----------------------
+[INFO] Building Challenges 1.1
+[INFO] --------------------------------[ jar ]---------------------------------
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/3.0.0-M7/maven-surefire-plugin-3.0.0-M7.pom
+Progress (1): 2.7/7.2 kBProgress (1): 5.5/7.2 kBProgress (1): 7.2 kB                        Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/3.0.0-M7/maven-surefire-plugin-3.0.0-M7.pom (7.2 kB at 10.0 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire/3.0.0-M7/surefire-3.0.0-M7.pom
+Progress (1): 2.7/22 kBProgress (1): 5.5/22 kBProgress (1): 8.2/22 kBProgress (1): 11/22 kB Progress (1): 14/22 kBProgress (1): 16/22 kBProgress (1): 19/22 kBProgress (1): 22 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire/3.0.0-M7/surefire-3.0.0-M7.pom (22 kB at 461 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/36/maven-parent-36.pom
+Progress (1): 4.1/45 kBProgress (1): 8.2/45 kBProgress (1): 12/45 kB Progress (1): 16/45 kBProgress (1): 20/45 kBProgress (1): 25/45 kBProgress (1): 29/45 kBProgress (1): 33/45 kBProgress (1): 37/45 kBProgress (1): 41/45 kBProgress (1): 45/45 kBProgress (1): 45 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/36/maven-parent-36.pom (45 kB at 523 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/apache/26/apache-26.pom
+Progress (1): 4.1/21 kBProgress (1): 8.2/21 kBProgress (1): 12/21 kB Progress (1): 16/21 kBProgress (1): 20/21 kBProgress (1): 21 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/apache/26/apache-26.pom (21 kB at 501 kB/s)
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ Challenges ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ Challenges ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 9 source files to /workspace/kirstiex-pep-project/target/classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[19,30] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[19,32] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[19,57] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,27] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,29] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,51] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,30] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,32] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,56] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,29] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,31] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,54] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,42] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,44] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,69] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,45] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,47] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,75] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,44] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,46] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,73] ';' expected
+[INFO] 21 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.012 s
+[INFO] Finished at: 2023-02-03T01:59:36Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.1:compile (default-compile) on project Challenges: Compilation failure: Compilation failure: 
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[19,30] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[19,32] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[19,57] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,27] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,29] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,51] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,30] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,32] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,56] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,29] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,31] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,54] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,42] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,44] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,69] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,45] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,47] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,75] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,44] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,46] not a statement
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,73] ';' expected
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

@@ -1,0 +1,7 @@
+commit a63bc1605d8a3560f23821ae8ab500b488af984b
+Author: Kirstie Goggans <ikirstiew@gmail.com>
+Date:   Fri Feb 3 01:59:02 2023 +0000
+
+    added initial endpoints
+
+ 6 files changed, 15 insertions(+), 3 deletions(-)
