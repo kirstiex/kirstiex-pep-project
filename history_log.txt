@@ -1,7 +1,7 @@
-commit a63bc1605d8a3560f23821ae8ab500b488af984b
+commit e2d8e5b91e3e7236c46df3818a3a277eca1c8f16
 Author: Kirstie Goggans <ikirstiew@gmail.com>
-Date:   Fri Feb 3 01:59:02 2023 +0000
+Date:   Fri Feb 3 02:02:06 2023 +0000
 
-    added initial endpoints
+    Added to Controller
 
- 6 files changed, 15 insertions(+), 3 deletions(-)
+ 2 files changed, 90 insertions(+)

@@ -24,6 +24,7 @@ public class SocialMediaController {
         app.delete("/messages/{message_id}"), this::deleteMessageIDHandler);
         app.patch("/messages/{message_id}"), this::patchMessageIDHandler);
         app.get("/accounts/{account_id}/messages", this::getAccountMessagesHandler);
+        app.start(8080);
 
         return app;
     }
@@ -36,5 +37,27 @@ public class SocialMediaController {
         context.json("sample text");
     }
 
+    private void postRegisterHandler(Context ctx) {
+        
+    }
+    private void postLoginHandler(Context ctx) {
+        
+    }
+    private void postMessageHandler(Context ctx) {
+        
+    }
+    private void deleteMessageIDHandler(Context ctx) {
+        
+    }
+    private void getMessageIDHandler(Context ctx) {
+        
+    }
+    private void patchMessageIDHandler(Context ctx) {
+        
+    }
+    private void getAccountMessagesHandler(Context ctx) {
+        
+    }
+   
 
 }
