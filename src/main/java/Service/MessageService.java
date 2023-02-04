@@ -34,4 +34,8 @@ import org.h2.engine.Database;
     public Message addMessage(Message message){
         return messageDAO.insertMessage(message);
     }
+
+    public List<Message> getAllMessages(){
+        return MessageDAO.getAllMessages();
+    }
  }

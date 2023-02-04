@@ -1,5 +1,10 @@
 package Controller;
 
+import Model.Message;
+import Model.Account;
+import Service.MessageService;
+import Service.AccountService;
+
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,13 +22,13 @@ public class SocialMediaController {
      */
     public Javalin startAPI() {
         Javalin app = Javalin.create();
-        app.post("/register/"), this::postRegisterHandler);
-        app.post("/login/"), this::postLoginHandler);
-        app.post("/messages/"), this::postMessageHandler);
-        app.get("/messages/"), this::getMessageHandler);
-        app.get("/messages/{message_id}"), this::getMessageIDHandler);
-        app.delete("/messages/{message_id}"), this::deleteMessageIDHandler);
-        app.patch("/messages/{message_id}"), this::patchMessageIDHandler);
+        app.post("/register/", this::postRegisterHandler);
+        app.post("/login/", this::postLoginHandler);
+        app.post("/messages/", this::postMessageHandler);
+        app.get("/messages/", this::getMessageHandler);
+        app.get("/messages/{message_id}", this::getMessageIDHandler);
+        app.delete("/messages/{message_id}", this::deleteMessageIDHandler);
+        app.patch("/messages/{message_id}", this::patchMessageIDHandler);
         app.get("/accounts/{account_id}/messages/", this::getAccountMessagesHandler);
         app.start(8080);
 
@@ -73,6 +78,7 @@ public class SocialMediaController {
         // response body should contain JSON list containing all messages retrieved from 
         // database. Should be empty if there are no messages.
         // status should always be 200
+        ctx.json(MessageService.getAllMessages());
     }
     private void deleteMessageIDHandler(Context ctx) {
         // submit a delete request for message
