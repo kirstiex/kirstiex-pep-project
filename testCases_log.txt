@@ -13,59 +13,65 @@
 [WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
 [INFO] Compiling 9 source files to /workspace/kirstiex-pep-project/target/classes
 [INFO] -------------------------------------------------------------
+[WARNING] COMPILATION WARNING : 
+[INFO] -------------------------------------------------------------
+[WARNING] Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+[INFO] 1 warning
+[INFO] -------------------------------------------------------------
+[INFO] -------------------------------------------------------------
 [ERROR] COMPILATION ERROR : 
 [INFO] -------------------------------------------------------------
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,31] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,33] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,58] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,28] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,30] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,52] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,31] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,33] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,57] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,30] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,32] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,55] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,42] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,44] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,69] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,45] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,47] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,75] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[26,44] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[26,46] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[26,73] ';' expected
-[INFO] 21 errors 
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[6,15] cannot access Service.AccountService
+  bad source file: /workspace/kirstiex-pep-project/src/main/java/Service/AccountService.java
+    file does not contain class Service.AccountService
+    Please remove or make sure it appears in the correct subdirectory of the sourcepath.
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Service/MessageService.java:[39,26] non-static method getAllMessages() cannot be referenced from a static context
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/DAO/MessageDAO.java:[26,35] no suitable constructor found for Message(int,java.lang.String)
+    constructor Model.Message.Message() is not applicable
+      (actual and formal argument lists differ in length)
+    constructor Model.Message.Message(int,java.lang.String,long) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor Model.Message.Message(int,int,java.lang.String,long) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/DAO/MessageDAO.java:[51,79] incompatible types: int cannot be converted to java.lang.String
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/DAO/MessageDAO.java:[70,35] no suitable constructor found for Message(int,java.lang.String)
+    constructor Model.Message.Message() is not applicable
+      (actual and formal argument lists differ in length)
+    constructor Model.Message.Message(int,java.lang.String,long) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor Model.Message.Message(int,int,java.lang.String,long) is not applicable
+      (actual and formal argument lists differ in length)
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[81,32] non-static method getAllMessages() cannot be referenced from a static context
+[INFO] 6 errors 
 [INFO] -------------------------------------------------------------
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.978 s
-[INFO] Finished at: 2023-02-03T22:52:05Z
+[INFO] Total time:  2.041 s
+[INFO] Finished at: 2023-02-04T03:15:59Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.1:compile (default-compile) on project Challenges: Compilation failure: Compilation failure: 
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,31] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,33] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[20,58] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,28] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,30] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[21,52] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,31] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,33] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[22,57] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,30] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,32] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[23,55] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,42] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,44] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[24,69] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,45] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,47] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[25,75] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[26,44] ';' expected
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[26,46] not a statement
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[26,73] ';' expected
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[6,15] cannot access Service.AccountService
+[ERROR]   bad source file: /workspace/kirstiex-pep-project/src/main/java/Service/AccountService.java
+[ERROR]     file does not contain class Service.AccountService
+[ERROR]     Please remove or make sure it appears in the correct subdirectory of the sourcepath.
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Service/MessageService.java:[39,26] non-static method getAllMessages() cannot be referenced from a static context
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/DAO/MessageDAO.java:[26,35] no suitable constructor found for Message(int,java.lang.String)
+[ERROR]     constructor Model.Message.Message() is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR]     constructor Model.Message.Message(int,java.lang.String,long) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR]     constructor Model.Message.Message(int,int,java.lang.String,long) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/DAO/MessageDAO.java:[51,79] incompatible types: int cannot be converted to java.lang.String
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/DAO/MessageDAO.java:[70,35] no suitable constructor found for Message(int,java.lang.String)
+[ERROR]     constructor Model.Message.Message() is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR]     constructor Model.Message.Message(int,java.lang.String,long) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR]     constructor Model.Message.Message(int,int,java.lang.String,long) is not applicable
+[ERROR]       (actual and formal argument lists differ in length)
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[81,32] non-static method getAllMessages() cannot be referenced from a static context
 [ERROR] -> [Help 1]
 [ERROR] 
 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.

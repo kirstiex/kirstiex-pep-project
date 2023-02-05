@@ -1,7 +1,7 @@
-commit aea58ddbb757d0307975384afbb6c1a0cfbcf5de
+commit 0ef27ec025a5efc3fc3b1c39e04b8fd663b9cf01
 Author: Kirstie Goggans <ikirstiew@gmail.com>
-Date:   Fri Feb 3 22:51:27 2023 +0000
+Date:   Sat Feb 4 03:15:42 2023 +0000
 
-    small additions to MessageService and messageDAO
+    getAllMessage Progress
 
- 6 files changed, 169 insertions(+), 18 deletions(-)
+ 5 files changed, 86 insertions(+), 55 deletions(-)

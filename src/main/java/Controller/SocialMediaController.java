@@ -9,6 +9,12 @@ import io.javalin.Javalin;
 import io.javalin.http.Context;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.List;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+
+
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
  * found in readme.md as well as the test cases. You should
@@ -20,6 +26,14 @@ public class SocialMediaController {
      * suite must receive a Javalin object from this method.
      * @return a Javalin app object which defines the behavior of the Javalin controller.
      */
+    MessageService messageService;
+    AccountService accountService;
+
+    public SocialMediaController(){
+        this.messageService = new MessageService();
+        this.accountService = new AccountService();
+    }
+
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.post("/register/", this::postRegisterHandler);
@@ -35,15 +49,22 @@ public class SocialMediaController {
         return app;
     }
 
+        
     /**
      * This is an example handler for an example endpoint.
      * @param context The Javalin Context object manages information about both the HTTP request and response.
-     */
+    
     private void exampleHandler(Context context) {
         context.json("sample text");
     }
-
-    private void postRegisterHandler(Context ctx) {
+ */
+/**
+     * Handler to post a new account.
+     * @param ctx the context object handles information HTTP requests and generates responses within Javalin. It will
+     *            be available to this method automatically thanks to the app.post method.
+     * @throws JsonProcessingException will be thrown if there is an issue converting JSON into an object.
+     */
+    private void postRegisterHandler(Context ctx) throws JsonProcessingException {
         //used to create an account
         // contains representation of JSON account
         //does not contain account_id
@@ -53,6 +74,13 @@ public class SocialMediaController {
         // response status should be 200 OK, which is default
         // if registration is not successful, response status should be 400 (client error)
         ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(ctx.body(), Account.class);
+        Account addedAccount = accountService.addAccount(account);
+        if(addedAccount!=null){
+            ctx.json(mapper.writeValueAsString(addedAccount));
+        }else{
+            ctx.status(400);
+        }
 
     }
     private void postLoginHandler(Context ctx) {
@@ -65,20 +93,29 @@ public class SocialMediaController {
         // Status should be 401 (unauthorized) if unsucessful
 
     }
-    private void postMessageHandler(Context ctx) {
-        //submit new post 
+    private void postMessageHandler(Context ctx) throws JsonProcessingException {
+        // add new message
         // request body should contain JSON representation of a message without ID
         // sucessful if message_text is not blank, under 255 characters
         // and posted_by refers to a real, existing user.
         // if successful response status should be 200
         // if unsuccessful response status should be 400 (Client error)
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(ctx.body(), Message.class);
+        Message addedMessage = messageService.addMessage(message);
+        if(addedMessage!=null){
+            ctx.json(mapper.writeValueAsString(addedMessage));
+        }else{
+            ctx.status(400);
+        }
     }
     private void getMessageHandler(Context ctx) {
         //user submits get request 
         // response body should contain JSON list containing all messages retrieved from 
         // database. Should be empty if there are no messages.
         // status should always be 200
-        ctx.json(MessageService.getAllMessages());
+        List<Message> messages = messageService.getAllMessages();
+        ctx.json(messages);
     }
     private void deleteMessageIDHandler(Context ctx) {
         // submit a delete request for message
@@ -110,6 +147,7 @@ public class SocialMediaController {
         // respsonse body should contain a JSON of a list containing all messages posted by 
         // user. list should be empty if there are no messages.
         // status should always be 200
+        context.json(messageService.getAllMessagesByID());
     }
    
 
