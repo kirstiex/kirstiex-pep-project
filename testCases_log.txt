@@ -25,6 +25,9 @@
   bad source file: /workspace/kirstiex-pep-project/src/main/java/Service/AccountService.java
     file does not contain class Service.AccountService
     Please remove or make sure it appears in the correct subdirectory of the sourcepath.
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[30,5] cannot find symbol
+  symbol:   class AccountService
+  location: class Controller.SocialMediaController
 [ERROR] /workspace/kirstiex-pep-project/src/main/java/Service/MessageService.java:[39,26] non-static method getAllMessages() cannot be referenced from a static context
 [ERROR] /workspace/kirstiex-pep-project/src/main/java/DAO/MessageDAO.java:[26,35] no suitable constructor found for Message(int,java.lang.String)
     constructor Model.Message.Message() is not applicable
@@ -41,20 +44,31 @@
       (actual and formal argument lists differ in length)
     constructor Model.Message.Message(int,int,java.lang.String,long) is not applicable
       (actual and formal argument lists differ in length)
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[81,32] non-static method getAllMessages() cannot be referenced from a static context
-[INFO] 6 errors 
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[34,35] cannot find symbol
+  symbol:   class AccountService
+  location: class Controller.SocialMediaController
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[150,9] cannot find symbol
+  symbol:   variable context
+  location: class Controller.SocialMediaController
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[150,36] cannot find symbol
+  symbol:   method getAllMessagesByID()
+  location: variable messageService of type Service.MessageService
+[INFO] 9 errors 
 [INFO] -------------------------------------------------------------
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.041 s
-[INFO] Finished at: 2023-02-04T03:15:59Z
+[INFO] Total time:  2.311 s
+[INFO] Finished at: 2023-02-05T05:10:17Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.1:compile (default-compile) on project Challenges: Compilation failure: Compilation failure: 
 [ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[6,15] cannot access Service.AccountService
 [ERROR]   bad source file: /workspace/kirstiex-pep-project/src/main/java/Service/AccountService.java
 [ERROR]     file does not contain class Service.AccountService
 [ERROR]     Please remove or make sure it appears in the correct subdirectory of the sourcepath.
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[30,5] cannot find symbol
+[ERROR]   symbol:   class AccountService
+[ERROR]   location: class Controller.SocialMediaController
 [ERROR] /workspace/kirstiex-pep-project/src/main/java/Service/MessageService.java:[39,26] non-static method getAllMessages() cannot be referenced from a static context
 [ERROR] /workspace/kirstiex-pep-project/src/main/java/DAO/MessageDAO.java:[26,35] no suitable constructor found for Message(int,java.lang.String)
 [ERROR]     constructor Model.Message.Message() is not applicable
@@ -71,7 +85,15 @@
 [ERROR]       (actual and formal argument lists differ in length)
 [ERROR]     constructor Model.Message.Message(int,int,java.lang.String,long) is not applicable
 [ERROR]       (actual and formal argument lists differ in length)
-[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[81,32] non-static method getAllMessages() cannot be referenced from a static context
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[34,35] cannot find symbol
+[ERROR]   symbol:   class AccountService
+[ERROR]   location: class Controller.SocialMediaController
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[150,9] cannot find symbol
+[ERROR]   symbol:   variable context
+[ERROR]   location: class Controller.SocialMediaController
+[ERROR] /workspace/kirstiex-pep-project/src/main/java/Controller/SocialMediaController.java:[150,36] cannot find symbol
+[ERROR]   symbol:   method getAllMessagesByID()
+[ERROR]   location: variable messageService of type Service.MessageService
 [ERROR] -> [Help 1]
 [ERROR] 
 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.

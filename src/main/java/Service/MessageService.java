@@ -1,13 +1,9 @@
 package Service;
 
 import Model.Message;
-import Util.ConnectionUtil;
 import DAO.MessageDAO;
 
-import java.sql.Connection;
 import java.util.List;
-
-import org.h2.engine.Database;
 
 /**
  * The purpose of a Service class is to contain "business logic" that sits between the web layer (controller) and
@@ -31,11 +27,48 @@ import org.h2.engine.Database;
         this.messageDAO = messageDAO;
     }
 
-    public Message addMessage(Message message){
-        return messageDAO.insertMessage(message);
+    public List<Message> getAllMessages(){
+        return messageDAO.getAllMessages();
     }
 
-    public List<Message> getAllMessages(){
-        return MessageDAO.getAllMessages();
+    public Message addMessage(Message message){
+        if(!message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255 && messageDAO.isExistingUser(message.posted_by)){
+            Message messages = messageDAO.findMessageByUser(message);
+
+            if(messages != null){
+                Message insertedMessage = messageDAO.insertMessage(messages);
+                if(insertedMessage != null){
+                    return insertedMessage; 
+                } else{
+                    return null;
+                }
+                
+            } else {
+                return null;
+       }
+    } else {
+        return null;
+    }
+    }
+
+    public Message getAllMessagesbyAccountID(int id){
+        return messageDAO.getMessageByAccountID(id);
+    }
+   
+    public Message getAllMessagesbyMessageID(int id){
+        return messageDAO.getMessageByMessageID(id);
+    }
+
+    public Message updateMessage(int posted_by){
+        Message messageFromDb = this.messageDAO.getMessageByMessageID(posted_by);
+
+        if(messageFromDb == null) return null;
+        
+        messageDAO.updateMessage(posted_by, messageFromDb);
+        return this.messageDAO.getMessageByMessageID(posted_by);
+    }
+
+    public boolean deleteMessage(int id){
+        return messageDAO.deleteMessage(id);
     }
  }

@@ -44,7 +44,6 @@ public class SocialMediaController {
         app.delete("/messages/{message_id}", this::deleteMessageIDHandler);
         app.patch("/messages/{message_id}", this::patchMessageIDHandler);
         app.get("/accounts/{account_id}/messages/", this::getAccountMessagesHandler);
-        app.start(8080);
 
         return app;
     }
@@ -83,7 +82,7 @@ public class SocialMediaController {
         }
 
     }
-    private void postLoginHandler(Context ctx) {
+    private void postLoginHandler(Context ctx) throws JsonProcessingException {
         //verify login
         //request body should contain JSON of account without id
         //may generate a Session token in the future
@@ -91,7 +90,15 @@ public class SocialMediaController {
         //if success response body should contain JSON of account with id
         // Status should be 200
         // Status should be 401 (unauthorized) if unsucessful
-
+        
+        ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(ctx.body(), Account.class);
+        Account findAccount = accountService.addAccount(account);
+        if(findAccount!=null){
+            ctx.json(mapper.writeValueAsString(findAccount));
+        }else{
+            ctx.status(401);
+        }
     }
     private void postMessageHandler(Context ctx) throws JsonProcessingException {
         // add new message
@@ -105,6 +112,7 @@ public class SocialMediaController {
         Message addedMessage = messageService.addMessage(message);
         if(addedMessage!=null){
             ctx.json(mapper.writeValueAsString(addedMessage));
+            ctx.status(200);
         }else{
             ctx.status(400);
         }
@@ -125,13 +133,17 @@ public class SocialMediaController {
         // respsone should be 200 
         // if the message did not exist. response should be 200. but response body should
         // be empty. 
+    
+        ctx.json(messageService.deleteMessage(Integer.parseInt(ctx.pathParam("id"))));
     }
     private void getMessageIDHandler(Context ctx) {
         // response body should contain JSON of the message identified by the message_id
         // expected for response body to simply be empty if there is no such message
         // resposne should always be 200
+        
+        ctx.json(messageService.getAllMessagesbyMessageID(Integer.parseInt(ctx.pathParam("id"))));
     }
-    private void patchMessageIDHandler(Context ctx) {
+    private void patchMessageIDHandler(Context ctx)  throws JsonProcessingException{
         // update message text identified by a message id
         // request body should contain a new message_text values to replace the message
         // identified by the message_id
@@ -141,13 +153,24 @@ public class SocialMediaController {
         // including ( message_id, posted_by, message_text, time_posted_epoch)
         // response should be 200
         // if not successful response status should be 400 (client error)
+        ObjectMapper mapper = new ObjectMapper();
+        //Message message = mapper.readValue(ctx.body(), Message.class);
+        int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+        Message updatedMessage = messageService.updateMessage(message_id);
+        System.out.println(updatedMessage);
+        if(updatedMessage == null){
+            ctx.status(400);
+        }else{
+            ctx.json(mapper.writeValueAsString(updatedMessage));
+        }
+
     }
     private void getAccountMessagesHandler(Context ctx) {
         // retrieve all messages written by a user
         // respsonse body should contain a JSON of a list containing all messages posted by 
         // user. list should be empty if there are no messages.
         // status should always be 200
-        context.json(messageService.getAllMessagesByID());
+        ctx.json(messageService.getAllMessagesbyAccountID(Integer.parseInt(ctx.pathParam("id"))));
     }
    
 
