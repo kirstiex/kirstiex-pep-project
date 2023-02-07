@@ -32,10 +32,10 @@ import java.util.List;
     }
 
     public Message addMessage(Message message){
-        if(!message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255 && messageDAO.isExistingUser(message.posted_by)){
-            Message messages = messageDAO.findMessageByUser(message);
-
-            if(messages != null){
+        if( !message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255){
+           // Message messages = messageDAO.findMessageByUser(message);
+            return messageDAO.insertMessage(message);
+            /*if(messages != null){
                 Message insertedMessage = messageDAO.insertMessage(messages);
                 if(insertedMessage != null){
                     return insertedMessage; 
@@ -45,7 +45,7 @@ import java.util.List;
                 
             } else {
                 return null;
-       }
+       }*/
     } else {
         return null;
     }
@@ -68,7 +68,7 @@ import java.util.List;
         return this.messageDAO.getMessageByMessageID(posted_by);
     }
 
-    public boolean deleteMessage(int id){
-        return messageDAO.deleteMessage(id);
+    public Message deleteMessage(Message message){
+        return messageDAO.deleteMessage(message);
     }
  }

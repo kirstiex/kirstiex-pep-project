@@ -24,25 +24,17 @@ public class AccountService {
 
         if(user.isBlank() || password.length() < 4){
             return null;
-        }
-
-        Account existingAccount = accountDAO.getAccountByUsername(user);
-        if(existingAccount != null){
+        } 
+        else if(accountDAO.getAccountByUsername(user) != null){
             return null;
-        }
-        Account insertedAccount = accountDAO.insertAccount(existingAccount);
-        return insertedAccount;
+        } else{
+           return accountDAO.insertAccount(account);
     }
+}
 
     public Account findAccount(Account account){
-        String user = account.getUsername();
-        String password = account.getPassword();
-
-        if(user == account.username && password == account.password){
-            return accountDAO.findAccount(account);
-        } else{
-            return null;
-        }
+        return accountDAO.findAccount(account);
+        
 
     }
 }

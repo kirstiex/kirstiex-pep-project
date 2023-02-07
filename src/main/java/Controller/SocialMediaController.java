@@ -7,6 +7,8 @@ import Service.AccountService;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
@@ -36,7 +38,7 @@ public class SocialMediaController {
 
     public Javalin startAPI() {
         Javalin app = Javalin.create();
-        app.post("/register/", this::postRegisterHandler);
+        app.post("/register/", this::newUserHandler);
         app.post("/login/", this::postLoginHandler);
         app.post("/messages/", this::postMessageHandler);
         app.get("/messages/", this::getMessageHandler);
@@ -44,7 +46,6 @@ public class SocialMediaController {
         app.delete("/messages/{message_id}", this::deleteMessageIDHandler);
         app.patch("/messages/{message_id}", this::patchMessageIDHandler);
         app.get("/accounts/{account_id}/messages/", this::getAccountMessagesHandler);
-
         return app;
     }
 
@@ -63,7 +64,7 @@ public class SocialMediaController {
      *            be available to this method automatically thanks to the app.post method.
      * @throws JsonProcessingException will be thrown if there is an issue converting JSON into an object.
      */
-    private void postRegisterHandler(Context ctx) throws JsonProcessingException {
+    private void newUserHandler(Context ctx) throws JsonProcessingException, JsonMappingException {
         //used to create an account
         // contains representation of JSON account
         //does not contain account_id
@@ -77,6 +78,7 @@ public class SocialMediaController {
         Account addedAccount = accountService.addAccount(account);
         if(addedAccount!=null){
             ctx.json(mapper.writeValueAsString(addedAccount));
+            ctx.status(200);
         }else{
             ctx.status(400);
         }
@@ -93,14 +95,15 @@ public class SocialMediaController {
         
         ObjectMapper mapper = new ObjectMapper();
         Account account = mapper.readValue(ctx.body(), Account.class);
-        Account findAccount = accountService.addAccount(account);
+        Account findAccount = accountService.findAccount(account);
         if(findAccount!=null){
             ctx.json(mapper.writeValueAsString(findAccount));
+            ctx.status(200);
         }else{
             ctx.status(401);
         }
     }
-    private void postMessageHandler(Context ctx) throws JsonProcessingException {
+    private void postMessageHandler(Context ctx) throws JsonProcessingException, JsonMappingException  {
         // add new message
         // request body should contain JSON representation of a message without ID
         // sucessful if message_text is not blank, under 255 characters
@@ -124,8 +127,9 @@ public class SocialMediaController {
         // status should always be 200
         List<Message> messages = messageService.getAllMessages();
         ctx.json(messages);
+        ctx.status(200);
     }
-    private void deleteMessageIDHandler(Context ctx) {
+    private void deleteMessageIDHandler(Context ctx) throws JsonProcessingException, JsonMappingException {
         // submit a delete request for message
         // deletion of an existing message should remove an existing message from 
         // the database
@@ -133,8 +137,10 @@ public class SocialMediaController {
         // respsone should be 200 
         // if the message did not exist. response should be 200. but response body should
         // be empty. 
-    
-        ctx.json(messageService.deleteMessage(Integer.parseInt(ctx.pathParam("id"))));
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(ctx.body(), Message.class);
+        ctx.json(messageService.deleteMessage(message));
+        ctx.status(200);
     }
     private void getMessageIDHandler(Context ctx) {
         // response body should contain JSON of the message identified by the message_id
@@ -142,6 +148,7 @@ public class SocialMediaController {
         // resposne should always be 200
         
         ctx.json(messageService.getAllMessagesbyMessageID(Integer.parseInt(ctx.pathParam("id"))));
+        ctx.status(200);
     }
     private void patchMessageIDHandler(Context ctx)  throws JsonProcessingException{
         // update message text identified by a message id
@@ -162,6 +169,7 @@ public class SocialMediaController {
             ctx.status(400);
         }else{
             ctx.json(mapper.writeValueAsString(updatedMessage));
+            ctx.status(200);
         }
 
     }
@@ -171,6 +179,7 @@ public class SocialMediaController {
         // user. list should be empty if there are no messages.
         // status should always be 200
         ctx.json(messageService.getAllMessagesbyAccountID(Integer.parseInt(ctx.pathParam("id"))));
+        ctx.status(200);
     }
    
 

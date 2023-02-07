@@ -1,6 +1,7 @@
 package DAO;
 
 import Model.Message;
+import Model.Account;
 import Util.ConnectionUtil;
 
 import java.sql.*;
@@ -9,8 +10,6 @@ import java.util.List;
 
 public class MessageDAO {
 
-
-    
     public Message getMessageByMessageID(int id){
         Connection connection = ConnectionUtil.getConnection();
         try {
@@ -58,18 +57,19 @@ public class MessageDAO {
     public Message insertMessage(Message message){
         Connection connection = ConnectionUtil.getConnection();
         try {
-            String sql = "INSERT INTO message(message_text, posted_by) values (?,?);" ;
+            String sql = "INSERT INTO message( posted_by, message_text, time_posted_epoch) values (?,?,?);" ;
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             
-            preparedStatement.setString(1,message.message_text);
-            preparedStatement.setInt(2,message.posted_by);
+            preparedStatement.setInt(1,message.getPosted_by());
+            preparedStatement.setString(2,message.getMessage_text());
+            preparedStatement.setLong(3,message.getTime_posted_epoch());
 
             preparedStatement.executeUpdate();
             ResultSet pkeyResultSet = preparedStatement.getGeneratedKeys();
             if(pkeyResultSet.next()){
                 int generated_message_id = (int) pkeyResultSet.getLong(1);
-                return new Message(generated_message_id,message.getMessage_text(), message.getPosted_by());
+                return new Message(generated_message_id, message.getPosted_by(),message.getMessage_text(), message.getTime_posted_epoch());
             }
         }catch(SQLException e){
             System.out.println(e.getMessage());
@@ -139,7 +139,7 @@ public class MessageDAO {
         Connection connection = ConnectionUtil.getConnection();
         try {
             //Write SQL logic here
-            String sql = "UPDATE message SET message_text=? WHERE message_id = ? ";
+            String sql = "UPDATE message SET message_text=? WHERE message_id = ?; ";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
  
             //write PreparedStatement setString and setInt methods here.
@@ -148,16 +148,12 @@ public class MessageDAO {
             preparedStatement.executeUpdate();
         }catch(SQLException e){
             System.out.println(e.getMessage());
-        } finally{
-            try{
-                connection.close();
-            } catch(SQLException e){
-                System.out.println(e.getMessage());
+        
             }
         }
-    }
+    
 
-    public boolean deleteMessage(int id){
+    public Message deleteMessage(Message message){
         Connection connection = ConnectionUtil.getConnection();
         try {
             //Write SQL logic here
@@ -166,19 +162,15 @@ public class MessageDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             //write preparedStatement's setString and setInt methods here.
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, message.getMessage_id());
 
-            int rowsDeleted = preparedStatement.executeUpdate();
-            return rowsDeleted > 0;
-            } catch(SQLException e){
+            preparedStatement.executeUpdate();
+            
+        }catch(SQLException e){
             System.out.println(e.getMessage());
-            return false;
-        } finally {
-            try {
-                connection.close();
-            } catch(SQLException e){
-                System.out.println(e.getMessage());
-            }
-     }
-    }
+        }
+        return null;
+    }   
+     
+    
 }
