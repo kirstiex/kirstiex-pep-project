@@ -146,8 +146,7 @@ public class SocialMediaController {
         // response body should contain JSON of the message identified by the message_id
         // expected for response body to simply be empty if there is no such message
         // resposne should always be 200
-        
-        ctx.json(messageService.getAllMessagesbyMessageID(Integer.parseInt(ctx.pathParam("id"))));
+        ctx.json(messageService.getAllMessagesbyMessageID(Integer.parseInt(ctx.pathParam("message_id"))));
         ctx.status(200);
     }
     private void patchMessageIDHandler(Context ctx)  throws JsonProcessingException{
@@ -160,26 +159,33 @@ public class SocialMediaController {
         // including ( message_id, posted_by, message_text, time_posted_epoch)
         // response should be 200
         // if not successful response status should be 400 (client error)
+
         ObjectMapper mapper = new ObjectMapper();
-        //Message message = mapper.readValue(ctx.body(), Message.class);
-        int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-        Message updatedMessage = messageService.updateMessage(message_id);
-        System.out.println(updatedMessage);
-        if(updatedMessage == null){
-            ctx.status(400);
-        }else{
-            ctx.json(mapper.writeValueAsString(updatedMessage));
+        Message message = mapper.readValue(ctx.body(), Message.class);
+        Message updateMessage = messageService.updateMessage(message);
+        if(updateMessage!=null){
+            ctx.json(mapper.writeValueAsString(updateMessage));
             ctx.status(200);
+        }else{
+            ctx.status(400);
         }
 
     }
-    private void getAccountMessagesHandler(Context ctx) {
+    private void getAccountMessagesHandler(Context ctx) throws JsonProcessingException, JsonMappingException  {
         // retrieve all messages written by a user
         // respsonse body should contain a JSON of a list containing all messages posted by 
         // user. list should be empty if there are no messages.
         // status should always be 200
-        ctx.json(messageService.getAllMessagesbyAccountID(Integer.parseInt(ctx.pathParam("id"))));
+        //String accountIdString = ctx.pathParam("account_id");
+        //int accountId = Integer.parseInt(accountIdString);
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(ctx.body(), Message.class);
+        if(messageService.getAllMessagesbyAccountID(message) == null){
+            ctx.status(200);
+        } else{
+        ctx.json(messageService.getAllMessagesbyAccountID(message));
         ctx.status(200);
+    }
     }
    
 

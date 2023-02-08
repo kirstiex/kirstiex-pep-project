@@ -51,21 +51,26 @@ import java.util.List;
     }
     }
 
-    public Message getAllMessagesbyAccountID(int id){
-        return messageDAO.getMessageByAccountID(id);
+    public List<Message> getAllMessagesbyAccountID(Message message){ 
+        if(messageDAO.getMessageByAccountID(message) == null){
+            return null;
+        } else{ 
+        return messageDAO.getMessageByAccountID(message);
     }
-   
+}
+ 
     public Message getAllMessagesbyMessageID(int id){
         return messageDAO.getMessageByMessageID(id);
     }
 
-    public Message updateMessage(int posted_by){
-        Message messageFromDb = this.messageDAO.getMessageByMessageID(posted_by);
+    //update message if new message is not blank and not too long
+    public Message updateMessage(Message message){
+        if(!message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255){
+           return messageDAO.updateMessage(message); 
 
-        if(messageFromDb == null) return null;
-        
-        messageDAO.updateMessage(posted_by, messageFromDb);
-        return this.messageDAO.getMessageByMessageID(posted_by);
+        }else{
+        return null;
+        }
     }
 
     public Message deleteMessage(Message message){
