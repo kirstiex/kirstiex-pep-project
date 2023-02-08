@@ -31,46 +31,41 @@ import java.util.List;
         return messageDAO.getAllMessages();
     }
 
+    //add a new message to database if the message is not blank and under 255 characters
     public Message addMessage(Message message){
         if( !message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255){
-           // Message messages = messageDAO.findMessageByUser(message);
             return messageDAO.insertMessage(message);
-            /*if(messages != null){
-                Message insertedMessage = messageDAO.insertMessage(messages);
-                if(insertedMessage != null){
-                    return insertedMessage; 
-                } else{
-                    return null;
-                }
-                
-            } else {
-                return null;
-       }*/
-    } else {
+        } else {
         return null;
-    }
-    }
-
-    public List<Message> getAllMessagesbyAccountID(Message message){ 
-        return messageDAO.getMessageByAccountID(message);
-    
-}
- 
+        }
+    } 
+    //get all messages by message_id
     public Message getAllMessagesbyMessageID(int id){
         return messageDAO.getMessageByMessageID(id);
     }
 
-    //update message if new message is not blank and not too long
-    public Message updateMessage(Message message){
-         return messageDAO.updateMessage(message); }
-/* 
-        if(!message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255){
-          
-        }else{
-        return null;
-        
-    }*/
+     //update message if new message is not blank and not too long
+    public Message updateMessage(int message_id, Message message){
+        Message messageFromDb = this.messageDAO.getMessageByMessageID(message_id);
 
+        if(messageFromDb == null){
+            return null;
+        } 
+         else if(!message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255) {
+            messageDAO.updateMessage(message_id, message); 
+            return this.messageDAO.getMessageByMessageID(message_id);
+        }
+        else {
+            return null;
+       }
+    }
+
+    //get all messages by the account_id / posted_by 
+    public List<Message> getAllMessagesbyAccountID(int account_id){ 
+        return messageDAO.getMessagePostedByUser(account_id);
+    
+}
+    //delete a message from the database with message_id
     public Message deleteMessage(int message_id){
         return messageDAO.deleteMessage(message_id);
     }

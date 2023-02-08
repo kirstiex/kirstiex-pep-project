@@ -4,7 +4,6 @@ import Model.Message;
 import Model.Account;
 import Service.MessageService;
 import Service.AccountService;
-import DAO.MessageDAO;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -142,6 +141,8 @@ public class SocialMediaController {
        ctx.json(messageService.deleteMessage(Integer.parseInt(ctx.pathParam("message_id"))));
        ctx.status(200);
     }
+
+
     private void getMessageIDHandler(Context ctx) {
         // response body should contain JSON of the message identified by the message_id
         // expected for response body to simply be empty if there is no such message
@@ -149,6 +150,8 @@ public class SocialMediaController {
         ctx.json(messageService.getAllMessagesbyMessageID(Integer.parseInt(ctx.pathParam("message_id"))));
         ctx.status(200);
     }
+
+
     private void patchMessageIDHandler(Context ctx)  throws JsonProcessingException{
         // update message text identified by a message id
         // request body should contain a new message_text values to replace the message
@@ -162,15 +165,28 @@ public class SocialMediaController {
 
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
-        Message updateMessage = messageService.updateMessage(message);
-        if(updateMessage==null){
-            ctx.json(mapper.writeValueAsString(updateMessage));
-            ctx.status(200);
-        }else{
+        int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+        Message updatedMessage = messageService.updateMessage(message_id, message);
+        System.out.println(updatedMessage);
+        if(updatedMessage==null){
             ctx.status(400);
+           
+        }else{
+             ctx.json(mapper.writeValueAsString(updatedMessage));
+            ctx.status(200);
         }
 
     }
+    private void getAccountMessagesHandler(Context ctx) throws JsonMappingException, JsonProcessingException{
+        //ObjectMapper mapper = new ObjectMapper();
+        //Message message = mapper.readValue(ctx.body(), Message.class);
+        int account_id = Integer.parseInt(ctx.pathParam("posted_by"));
+        List<Message> getAccountByAccountID = messageService.getAllMessagesbyAccountID(account_id);
+        System.out.println(getAccountByAccountID);
+        ctx.status(200);
+    }
+
+    /* 
     private void getAccountMessagesHandler(Context ctx) throws JsonProcessingException, JsonMappingException  {
         // retrieve all messages written by a user
         // respsonse body should contain a JSON of a list containing all messages posted by 
@@ -190,5 +206,5 @@ public class SocialMediaController {
     }
     }
    
-
+*/
 }
