@@ -52,11 +52,8 @@ import java.util.List;
     }
 
     public List<Message> getAllMessagesbyAccountID(Message message){ 
-        if(messageDAO.getMessageByAccountID(message) == null){
-            return null;
-        } else{ 
         return messageDAO.getMessageByAccountID(message);
-    }
+    
 }
  
     public Message getAllMessagesbyMessageID(int id){
@@ -65,15 +62,16 @@ import java.util.List;
 
     //update message if new message is not blank and not too long
     public Message updateMessage(Message message){
+         return messageDAO.updateMessage(message); }
+/* 
         if(!message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255){
-           return messageDAO.updateMessage(message); 
-
+          
         }else{
         return null;
-        }
-    }
+        
+    }*/
 
-    public Message deleteMessage(Message message){
-        return messageDAO.deleteMessage(message);
+    public Message deleteMessage(int message_id){
+        return messageDAO.deleteMessage(message_id);
     }
  }

@@ -4,6 +4,7 @@ import Model.Message;
 import Model.Account;
 import Service.MessageService;
 import Service.AccountService;
+import DAO.MessageDAO;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -137,10 +138,9 @@ public class SocialMediaController {
         // respsone should be 200 
         // if the message did not exist. response should be 200. but response body should
         // be empty. 
-        ObjectMapper mapper = new ObjectMapper();
-        Message message = mapper.readValue(ctx.body(), Message.class);
-        ctx.json(messageService.deleteMessage(message));
-        ctx.status(200);
+ 
+       ctx.json(messageService.deleteMessage(Integer.parseInt(ctx.pathParam("message_id"))));
+       ctx.status(200);
     }
     private void getMessageIDHandler(Context ctx) {
         // response body should contain JSON of the message identified by the message_id
@@ -163,7 +163,7 @@ public class SocialMediaController {
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
         Message updateMessage = messageService.updateMessage(message);
-        if(updateMessage!=null){
+        if(updateMessage==null){
             ctx.json(mapper.writeValueAsString(updateMessage));
             ctx.status(200);
         }else{
@@ -176,14 +176,16 @@ public class SocialMediaController {
         // respsonse body should contain a JSON of a list containing all messages posted by 
         // user. list should be empty if there are no messages.
         // status should always be 200
-        //String accountIdString = ctx.pathParam("account_id");
-        //int accountId = Integer.parseInt(accountIdString);
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
-        if(messageService.getAllMessagesbyAccountID(message) == null){
+         String accountIdString = ctx.pathParam("account_id");
+         int accountId = Integer.parseInt(accountIdString);
+         message.setPosted_by(accountId);
+         List<Message> messages = messageService.getAllMessagesbyAccountID(message);
+        if(messages == null){
             ctx.status(200);
         } else{
-        ctx.json(messageService.getAllMessagesbyAccountID(message));
+        ctx.json(messages);
         ctx.status(200);
     }
     }
