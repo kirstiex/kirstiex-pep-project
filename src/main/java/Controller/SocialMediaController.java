@@ -129,19 +129,6 @@ public class SocialMediaController {
         ctx.json(messages);
         ctx.status(200);
     }
-    private void deleteMessageIDHandler(Context ctx) throws JsonProcessingException, JsonMappingException {
-        // submit a delete request for message
-        // deletion of an existing message should remove an existing message from 
-        // the database
-        // if the message existed response body should contain the now-deleted message
-        // respsone should be 200 
-        // if the message did not exist. response should be 200. but response body should
-        // be empty. 
- 
-       ctx.json(messageService.deleteMessage(Integer.parseInt(ctx.pathParam("message_id"))));
-       ctx.status(200);
-    }
-
 
     private void getMessageIDHandler(Context ctx) {
         // response body should contain JSON of the message identified by the message_id
@@ -151,6 +138,14 @@ public class SocialMediaController {
         ctx.status(200);
     }
 
+    private void getAccountMessagesHandler(Context ctx) throws JsonMappingException, JsonProcessingException{
+        /// retrieve all messages written by a user
+        // respsonse body should contain a JSON of a list containing all messages posted by user. list should be empty if there are no messages.
+        // status should always be 200
+
+         ctx.json(messageService.getAllMessagesbyAccountID(Integer.parseInt(ctx.pathParam("account_id"))));
+         ctx.status(200);
+    }
 
     private void patchMessageIDHandler(Context ctx)  throws JsonProcessingException{
         // update message text identified by a message id
@@ -177,34 +172,30 @@ public class SocialMediaController {
         }
 
     }
-    private void getAccountMessagesHandler(Context ctx) throws JsonMappingException, JsonProcessingException{
-        //ObjectMapper mapper = new ObjectMapper();
-        //Message message = mapper.readValue(ctx.body(), Message.class);
-        int account_id = Integer.parseInt(ctx.pathParam("posted_by"));
-        List<Message> getAccountByAccountID = messageService.getAllMessagesbyAccountID(account_id);
-        System.out.println(getAccountByAccountID);
-        ctx.status(200);
+
+    private void deleteMessageIDHandler(Context ctx) throws JsonProcessingException, JsonMappingException {
+        // submit a delete request for message
+        // deletion of an existing message should remove an existing message from the database
+        // if the message existed response body should contain the now-deleted message response should be 200 
+        // if the message did not exist. response should be 200. but response body should
+        // be empty. 
+        ObjectMapper mapper = new ObjectMapper();
+        int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+        Message checkMessage = messageService.getAllMessagesbyMessageID(message_id);
+        if(checkMessage == null){
+            ctx.status(200);
+        }
+        Message deletedMessage = messageService.deleteMessage(message_id);
+        
+        if( deletedMessage != null){
+            ctx.json(deletedMessage);
+          ctx.status(200);
+        //  System.out.println(deletedMessage);
+        }else{
+          // ctx.json(mapper.writeValueAsString(deletedMessage));
+        
+            ctx.status(200);
+        }
     }
 
-    /* 
-    private void getAccountMessagesHandler(Context ctx) throws JsonProcessingException, JsonMappingException  {
-        // retrieve all messages written by a user
-        // respsonse body should contain a JSON of a list containing all messages posted by 
-        // user. list should be empty if there are no messages.
-        // status should always be 200
-        ObjectMapper mapper = new ObjectMapper();
-        Message message = mapper.readValue(ctx.body(), Message.class);
-         String accountIdString = ctx.pathParam("account_id");
-         int accountId = Integer.parseInt(accountIdString);
-         message.setPosted_by(accountId);
-         List<Message> messages = messageService.getAllMessagesbyAccountID(message);
-        if(messages == null){
-            ctx.status(200);
-        } else{
-        ctx.json(messages);
-        ctx.status(200);
-    }
-    }
-   
-*/
 }

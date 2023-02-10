@@ -32,10 +32,15 @@ import java.util.List;
     }
 
     //add a new message to database if the message is not blank and under 255 characters
+    //also user must not already exist
+
     public Message addMessage(Message message){
+        
         if( !message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255){
             return messageDAO.insertMessage(message);
-        } else {
+        } else if(this.messageDAO.getAccountByAccountId(message)== null){
+            return null;
+        }else {
         return null;
         }
     } 
@@ -44,13 +49,20 @@ import java.util.List;
         return messageDAO.getMessageByMessageID(id);
     }
 
-     //update message if new message is not blank and not too long
+    //get all messages by the account_id / posted_by 
+    public List<Message> getAllMessagesbyAccountID(int account_id){ 
+        return messageDAO.getMessagePostedByUser(account_id);
+    
+}
+     //update message 
     public Message updateMessage(int message_id, Message message){
         Message messageFromDb = this.messageDAO.getMessageByMessageID(message_id);
 
+        // if there is no message in database return null
         if(messageFromDb == null){
             return null;
         } 
+        //return updated message if new message isn't blank and has length less than 255
          else if(!message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255) {
             messageDAO.updateMessage(message_id, message); 
             return this.messageDAO.getMessageByMessageID(message_id);
@@ -59,14 +71,25 @@ import java.util.List;
             return null;
        }
     }
-
-    //get all messages by the account_id / posted_by 
-    public List<Message> getAllMessagesbyAccountID(int account_id){ 
-        return messageDAO.getMessagePostedByUser(account_id);
     
-}
+  //  public Message deleteMessage(int message_id) {
+  //      
+  //      return messageDAO.deleteMessage(message_id);
+   // }
+//
     //delete a message from the database with message_id
+    
     public Message deleteMessage(int message_id){
-        return messageDAO.deleteMessage(message_id);
+        Message messageFromDb = this.messageDAO.getMessageByMessageID(message_id);
+
+        // if there is no message in database return null
+        if(messageFromDb == null){
+            return null;
+        }        
+        else {
+            messageDAO.deleteMessage(message_id); 
+            return messageFromDb;
+            
+       }
     }
  }
