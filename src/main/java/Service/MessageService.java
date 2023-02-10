@@ -27,6 +27,8 @@ import java.util.List;
         this.messageDAO = messageDAO;
     }
 
+    
+
     public List<Message> getAllMessages(){
         return messageDAO.getAllMessages();
     }
@@ -36,16 +38,18 @@ import java.util.List;
 
     public Message addMessage(Message message){
         
-        if( !message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255){
+        if( !message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255 || this.messageDAO.getAccountByAccountId(message) != null){
             return messageDAO.insertMessage(message);
-        } else if(this.messageDAO.getAccountByAccountId(message)== null){
-            return null;
+        
         }else {
         return null;
         }
     } 
     //get all messages by message_id
     public Message getAllMessagesbyMessageID(int id){
+        Message messageFromDb = this.messageDAO.getMessageByMessageID(id);
+        if(messageFromDb == null) return null;
+
         return messageDAO.getMessageByMessageID(id);
     }
 
@@ -72,21 +76,23 @@ import java.util.List;
        }
     }
     
-  //  public Message deleteMessage(int message_id) {
-  //      
-  //      return messageDAO.deleteMessage(message_id);
-   // }
-//
+  // public void deleteMessage(int message_id) {
+   //     messageDAO.deleteMessage(message_id);
+ //}
+
     //delete a message from the database with message_id
     
-    public Message deleteMessage(int message_id){
+    
+     
+     public Message deleteMessage(int message_id){
         Message messageFromDb = this.messageDAO.getMessageByMessageID(message_id);
 
         // if there is no message in database return null
-        if(messageFromDb == null){
+        if(messageFromDb == null ){
             return null;
         }        
         else {
+           
             messageDAO.deleteMessage(message_id); 
             return messageFromDb;
             

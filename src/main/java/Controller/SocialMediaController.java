@@ -134,8 +134,15 @@ public class SocialMediaController {
         // response body should contain JSON of the message identified by the message_id
         // expected for response body to simply be empty if there is no such message
         // resposne should always be 200
-        ctx.json(messageService.getAllMessagesbyMessageID(Integer.parseInt(ctx.pathParam("message_id"))));
-        ctx.status(200);
+        //Message message = mapper.readValue(ctx.body(), Message.class);
+        String messageIdString = ctx.pathParam("message_id");
+        if (messageIdString == null){
+             ctx.status(200);
+        } else {
+            int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+            ctx.json(messageService.getAllMessagesbyMessageID(message_id));
+            ctx.status(200);
+        }      
     }
 
     private void getAccountMessagesHandler(Context ctx) throws JsonMappingException, JsonProcessingException{
@@ -172,30 +179,29 @@ public class SocialMediaController {
         }
 
     }
-
-    private void deleteMessageIDHandler(Context ctx) throws JsonProcessingException, JsonMappingException {
-        // submit a delete request for message
+      // submit a delete request for message
         // deletion of an existing message should remove an existing message from the database
         // if the message existed response body should contain the now-deleted message response should be 200 
         // if the message did not exist. response should be 200. but response body should
         // be empty. 
+    private void deleteMessageIDHandler(Context ctx) throws JsonProcessingException, JsonMappingException {
         ObjectMapper mapper = new ObjectMapper();
-        int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-        Message checkMessage = messageService.getAllMessagesbyMessageID(message_id);
-        if(checkMessage == null){
+        String messageIdString = ctx.pathParam("message_id");
+        if(messageIdString == null){
             ctx.status(200);
-        }
-        Message deletedMessage = messageService.deleteMessage(message_id);
-        
-        if( deletedMessage != null){
-            ctx.json(deletedMessage);
-          ctx.status(200);
-        //  System.out.println(deletedMessage);
-        }else{
-          // ctx.json(mapper.writeValueAsString(deletedMessage));
-        
+        } else {
+        int messageId = Integer.parseInt(ctx.pathParam("message_id"));
+       // Message messageFromDb = messageService.getAllMessagesbyMessageID(messageId);
+        Message deletedMessage = messageService.deleteMessage(messageId);
+        if (deletedMessage == null) {
             ctx.status(200);
-        }
+        } else { 
+            ctx.json(mapper.writeValueAsString(deletedMessage));
+            ctx.status(200);
+        }    
+     } 
+         
     }
+} 
+    
 
-}

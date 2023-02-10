@@ -9,8 +9,6 @@ import java.util.List;
 
 public class MessageDAO {
 
-  
-
     public Message insertMessage(Message message){
         Connection connection = ConnectionUtil.getConnection();
         try {
@@ -137,11 +135,8 @@ public class MessageDAO {
         } 
     }
 
-    public int deleteMessage(int id){
+    public void deleteMessage(int id){
         Connection connection = ConnectionUtil.getConnection();
-       // Message deletedMessage = this.getMessageByMessageID(id);
-        
-        
             try {      
                 //Write SQL logic here
                 String sql = "DELETE FROM message WHERE message_id = ?;";    
@@ -149,15 +144,11 @@ public class MessageDAO {
 
                 //write preparedStatement's setString and setInt methods here.
                 preparedStatement.setInt(1, id);
-                 int result = preparedStatement.executeUpdate();
-                if (result > 0){         
-                    return result;
-               } else {
-               return 0;
-                }
-            }catch(SQLException e){
+                preparedStatement.executeUpdate();
+               
+                
+            } catch(SQLException e){
                 System.out.println(e.getMessage());
-               return 0;
             } 
     }
 }
