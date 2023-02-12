@@ -390,6 +390,8 @@ public class MessagingIntegrationTest {
 //        the response status should be 200 (ok)
         Assert.assertEquals(200, status);
 //        the response body should be empty
+System.out.println("Response body: " + response.body().toString().length());
+System.out.println("Response body: " + response.body());
         Assert.assertTrue(response.body().toString().length()==0);
     }
     /**
@@ -429,6 +431,8 @@ public class MessagingIntegrationTest {
                 .build();
         HttpResponse getMessageResponse = webClient.send(getMessageRequest, HttpResponse.BodyHandlers.ofString());
 //        the response body should be empty
+        System.out.println("Response body: " + getMessageResponse.body().toString().length());
+        System.out.println("Response body: " + getMessageResponse.body());
         Assert.assertTrue(getMessageResponse.body().toString().length()==0);
     }
 

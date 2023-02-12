@@ -12,10 +12,16 @@ public class MessageDAO {
     public Message insertMessage(Message message){
         Connection connection = ConnectionUtil.getConnection();
         try {
+             // Check if the account_id exists
+            String checkSql = "SELECT 1 FROM account WHERE account_id = ?";
+            PreparedStatement checkStatement = connection.prepareStatement(checkSql);
+            checkStatement.setInt(1, message.getPosted_by());
+            ResultSet checkResultSet = checkStatement.executeQuery();
+
+            if (checkResultSet.next()) {
             String sql = "INSERT INTO message(posted_by, message_text, time_posted_epoch) values (?,?,?);" ;
             PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            
             preparedStatement.setInt(1,message.getPosted_by());
             preparedStatement.setString(2,message.getMessage_text());
             preparedStatement.setLong(3,message.getTime_posted_epoch());
@@ -26,6 +32,7 @@ public class MessageDAO {
                 int generated_message_id = (int) pkeyResultSet.getLong(1);
                 return new Message(generated_message_id, message.getPosted_by(),message.getMessage_text(), message.getTime_posted_epoch());
             }
+        }
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
@@ -33,7 +40,6 @@ public class MessageDAO {
     }
 
     //checking account to see if the account_id exist
-    
     public Message getAccountByAccountId(Message message) {
         Connection connection = ConnectionUtil.getConnection();
         try {
@@ -99,11 +105,10 @@ public class MessageDAO {
         Connection connection = ConnectionUtil.getConnection();
         try {
             //Write SQL logic here
-            String sql = "SELECT * FROM message WHERE message_id = ?;";
-            
+            String sql = "SELECT * FROM message WHERE message_id = ?;"; 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            //write preparedStatement's setString and setInt methods here.
+            //write preparedStatement's setString and setInt methods here.    
             preparedStatement.setInt(1, id);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -121,9 +126,9 @@ public class MessageDAO {
         Connection connection = ConnectionUtil.getConnection();
         try {
             //Write SQL logic here
-            String sql = "UPDATE message SET message_text=? WHERE message_id = ? ";
+            String sql = "UPDATE message SET message_text=? WHERE message_id =?;";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
- 
+
             //write PreparedStatement setString and setInt methods here.
             preparedStatement.setString(1, message.message_text);
             preparedStatement.setInt(2, id);
@@ -133,22 +138,24 @@ public class MessageDAO {
             System.out.println(e.getMessage());
             
         } 
+
     }
 
     public void deleteMessage(int id){
         Connection connection = ConnectionUtil.getConnection();
-            try {      
-                //Write SQL logic here
-                String sql = "DELETE FROM message WHERE message_id = ?;";    
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try {
+            //Write SQL logic here
+            String sql = "DELETE message WHERE message_id =?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-                //write preparedStatement's setString and setInt methods here.
-                preparedStatement.setInt(1, id);
-                preparedStatement.executeUpdate();
-               
-                
-            } catch(SQLException e){
-                System.out.println(e.getMessage());
-            } 
+            //write PreparedStatement setString and setInt methods here.
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+    } catch(SQLException e){
+            System.out.println(e.getMessage());
+            
+        } 
+
     }
-}
+}    
+    

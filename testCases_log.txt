@@ -25,7 +25,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running AuthIntegrationTest
-[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.743 s - in AuthIntegrationTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.926 s - in AuthIntegrationTest
 [INFO] Running MessagingIntegrationTest
 Message{message_id=1, posted_by=1, message_text='updated message', time_posted_epoch=1669947792}
 Referential integrity constraint violation: "CONSTRAINT_63: PUBLIC.MESSAGE FOREIGN KEY(POSTED_BY) REFERENCES PUBLIC.ACCOUNT(ACCOUNT_ID) (1)"; SQL statement:
@@ -34,8 +34,8 @@ Message{message_id=1, posted_by=1, message_text='updated message', time_posted_e
 null
 null
 null
-[ERROR] Tests run: 20, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 20.837 s <<< FAILURE! - in MessagingIntegrationTest
-[ERROR] MessagingIntegrationTest.deletedMessageShouldNotExistTest  Time elapsed: 1.043 s  <<< FAILURE!
+[ERROR] Tests run: 20, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 20.929 s <<< FAILURE! - in MessagingIntegrationTest
+[ERROR] MessagingIntegrationTest.deletedMessageShouldNotExistTest  Time elapsed: 1.091 s  <<< FAILURE!
 java.lang.AssertionError
 	at org.junit.Assert.fail(Assert.java:87)
 	at org.junit.Assert.assertTrue(Assert.java:42)
@@ -94,8 +94,8 @@ java.lang.AssertionError
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  34.581 s
-[INFO] Finished at: 2023-02-10T02:48:59Z
+[INFO] Total time:  36.612 s
+[INFO] Finished at: 2023-02-10T18:27:19Z
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M7:test (default-test) on project Challenges: There are test failures.
 [ERROR] 

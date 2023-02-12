@@ -15,42 +15,34 @@ import java.util.List;
  * application that follows best practices will often have unnecessary code, but this makes the code more
  * readable and maintainable in the long run!
  */
-
  public class MessageService{
-    MessageDAO messageDAO;
+    public MessageDAO messageDAO;
 
     public MessageService(){
         messageDAO = new MessageDAO();
     }
-
     public MessageService(MessageDAO messageDAO){
         this.messageDAO = messageDAO;
     }
-
-    
-
     public List<Message> getAllMessages(){
         return messageDAO.getAllMessages();
     }
 
     //add a new message to database if the message is not blank and under 255 characters
     //also user must not already exist
-
-    public Message addMessage(Message message){
-        
+    public Message addMessage(Message message){   
         if( !message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255 || this.messageDAO.getAccountByAccountId(message) != null){
             return messageDAO.insertMessage(message);
-        
-        }else {
-        return null;
-        }
+        }else { return null;}
     } 
+
     //get all messages by message_id
     public Message getAllMessagesbyMessageID(int id){
-        Message messageFromDb = this.messageDAO.getMessageByMessageID(id);
-        if(messageFromDb == null) return null;
-
-        return messageDAO.getMessageByMessageID(id);
+        Message messageFromDb = messageDAO.getMessageByMessageID(id);
+        if(messageFromDb == null) {return null;}
+        else{
+             return messageDAO.getMessageByMessageID(id);
+        }
     }
 
     //get all messages by the account_id / posted_by 
@@ -75,27 +67,10 @@ import java.util.List;
             return null;
        }
     }
-    
-  // public void deleteMessage(int message_id) {
-   //     messageDAO.deleteMessage(message_id);
- //}
 
-    //delete a message from the database with message_id
-    
-    
-     
-     public Message deleteMessage(int message_id){
-        Message messageFromDb = this.messageDAO.getMessageByMessageID(message_id);
-
-        // if there is no message in database return null
-        if(messageFromDb == null ){
-            return null;
-        }        
-        else {
-           
-            messageDAO.deleteMessage(message_id); 
-            return messageFromDb;
-            
-       }
-    }
- }
+ //delete a message from the database with message_id    
+   public void deleteMessage(int id) {
+          messageDAO.deleteMessage(id);
+         }
+        }
+ 

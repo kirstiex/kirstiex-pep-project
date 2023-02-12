@@ -15,8 +15,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-
-
 /**
  * TODO: You will need to write your own endpoints and handlers for your controller. The endpoints you will need can be
  * found in readme.md as well as the test cases. You should
@@ -49,30 +47,13 @@ public class SocialMediaController {
         return app;
     }
 
-        
-    /**
-     * This is an example handler for an example endpoint.
-     * @param context The Javalin Context object manages information about both the HTTP request and response.
-    
-    private void exampleHandler(Context context) {
-        context.json("sample text");
-    }
- */
 /**
      * Handler to post a new account.
-     * @param ctx the context object handles information HTTP requests and generates responses within Javalin. It will
-     *            be available to this method automatically thanks to the app.post method.
-     * @throws JsonProcessingException will be thrown if there is an issue converting JSON into an object.
+     *  Creates New account with account username and password. Username cannot be blank and password must be at least 4 characters
+     *  contains JSON representation of account. response status 200 OK. 
+     *  If registration not successful, response status should be 400 (client error)
      */
-    private void newUserHandler(Context ctx) throws JsonProcessingException, JsonMappingException {
-        //used to create an account
-        // contains representation of JSON account
-        //does not contain account_id
-        // username cannot be blank 
-        // password is at least 4 characters long
-        // account with that username doesn't already exist
-        // response status should be 200 OK, which is default
-        // if registration is not successful, response status should be 400 (client error)
+    private void newUserHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Account account = mapper.readValue(ctx.body(), Account.class);
         Account addedAccount = accountService.addAccount(account);
@@ -84,15 +65,16 @@ public class SocialMediaController {
         }
 
     }
-    private void postLoginHandler(Context ctx) throws JsonProcessingException {
-        //verify login
-        //request body should contain JSON of account without id
-        //may generate a Session token in the future
-        // successful if username and password provided in request body match real account
-        //if success response body should contain JSON of account with id
-        // Status should be 200
-        // Status should be 401 (unauthorized) if unsucessful
-        
+   /**
+     * Handler to login to an account.
+     * login to account with account username and password.
+        * verify login - request body should contain JSON of account without id
+        * successful if username and password provided in request body match real account
+        * if successful response body should contain JSON of account with id
+        * Status 200 if successful 
+        * Status 401 (unauthorized) if unsucessful
+     */ 
+    private void postLoginHandler(Context ctx) throws JsonProcessingException { 
         ObjectMapper mapper = new ObjectMapper();
         Account account = mapper.readValue(ctx.body(), Account.class);
         Account findAccount = accountService.findAccount(account);
@@ -103,13 +85,13 @@ public class SocialMediaController {
             ctx.status(401);
         }
     }
-    private void postMessageHandler(Context ctx) throws JsonProcessingException, JsonMappingException  {
-        // add new message
-        // request body should contain JSON representation of a message without ID
-        // sucessful if message_text is not blank, under 255 characters
-        // and posted_by refers to a real, existing user.
-        // if successful response status should be 200
-        // if unsuccessful response status should be 400 (Client error)
+    /**
+     * Handler to post a new message.
+     *  Creates New message. Successful if message_text is not blank, under 255 characters
+     *  posted_by must refer to a real, existing user.
+     *  if successful status should be 200. If unsuccessful status should be 400.
+     */
+    private void postMessageHandler(Context ctx) throws JsonProcessingException, JsonMappingException  {   
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
         Message addedMessage = messageService.addMessage(message);
@@ -119,89 +101,91 @@ public class SocialMediaController {
         }else{
             ctx.status(400);
         }
-    }
+    } 
+        
+    /**
+     * Handler to get all messages
+     *  response body should contain JSON list containing all messages retrieved from the database.
+     *  It should be empty if no messages are found. 
+     *  Status should stay 200.
+     */
     private void getMessageHandler(Context ctx) {
-        //user submits get request 
-        // response body should contain JSON list containing all messages retrieved from 
-        // database. Should be empty if there are no messages.
-        // status should always be 200
         List<Message> messages = messageService.getAllMessages();
         ctx.json(messages);
         ctx.status(200);
     }
-
-    private void getMessageIDHandler(Context ctx) {
-        // response body should contain JSON of the message identified by the message_id
-        // expected for response body to simply be empty if there is no such message
-        // resposne should always be 200
-        //Message message = mapper.readValue(ctx.body(), Message.class);
-        String messageIdString = ctx.pathParam("message_id");
-        if (messageIdString == null){
-             ctx.status(200);
-        } else {
+    /**
+     * Handler to get a message by its message_id
+       Response body should contain a JSON of the message identified by the message_id 
+     * if there is no message it should just send an empty response.
+     * Status should always be 200.
+     */
+    private void getMessageIDHandler(Context ctx) throws JsonProcessingException {
+            ObjectMapper mapper = new ObjectMapper();
             int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-            ctx.json(messageService.getAllMessagesbyMessageID(message_id));
-            ctx.status(200);
+            Message messagebyID = messageService.getAllMessagesbyMessageID(message_id); 
+            if(messagebyID != null){
+                ctx.json(mapper.writeValueAsString(messagebyID));
+                ctx.status(200);     
+            } else{
+                ctx.status(200);     
+            }
+
         }      
-    }
-
-    private void getAccountMessagesHandler(Context ctx) throws JsonMappingException, JsonProcessingException{
-        /// retrieve all messages written by a user
-        // respsonse body should contain a JSON of a list containing all messages posted by user. list should be empty if there are no messages.
-        // status should always be 200
-
+    /**
+     * Handler to get all messages written by an user
+     * Response body should contain a JSON of a list containing all messages posted by a user.
+     * List should be empty if there are no messages. 
+     * Status should always be 200.
+     */
+    private void getAccountMessagesHandler(Context ctx) {
          ctx.json(messageService.getAllMessagesbyAccountID(Integer.parseInt(ctx.pathParam("account_id"))));
          ctx.status(200);
     }
-
+    /**
+     * Handler to update a message
+     *  Updates existing message identified by a message_id 
+     *  request body should contain a new message_text value. The update of a message should
+     *  be successful successful if the message_id already exist and the new message_text is not blank and is not over 255 characters.
+     *  if successful the response body will contain the full updated message.
+     *  response should be 200. if not successful response should be 400.
+     */
     private void patchMessageIDHandler(Context ctx)  throws JsonProcessingException{
-        // update message text identified by a message id
-        // request body should contain a new message_text values to replace the message
-        // identified by the message_id
-        // the update of a message should be successful if the message id already exist and the
-        // new message_text is not blank and is not over 255 characters
-        //  if successful the response body should contain the full updated message
-        // including ( message_id, posted_by, message_text, time_posted_epoch)
-        // response should be 200
-        // if not successful response status should be 400 (client error)
-
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
         Message updatedMessage = messageService.updateMessage(message_id, message);
-        System.out.println(updatedMessage);
         if(updatedMessage==null){
-            ctx.status(400);
-           
+            ctx.status(400); 
         }else{
-             ctx.json(mapper.writeValueAsString(updatedMessage));
+            ctx.json(mapper.writeValueAsString(updatedMessage));
             ctx.status(200);
         }
-
     }
-      // submit a delete request for message
+        // submit a delete request for message
         // deletion of an existing message should remove an existing message from the database
         // if the message existed response body should contain the now-deleted message response should be 200 
         // if the message did not exist. response should be 200. but response body should
-        // be empty. 
-    private void deleteMessageIDHandler(Context ctx) throws JsonProcessingException, JsonMappingException {
-        ObjectMapper mapper = new ObjectMapper();
-        String messageIdString = ctx.pathParam("message_id");
-        if(messageIdString == null){
-            ctx.status(200);
-        } else {
-        int messageId = Integer.parseInt(ctx.pathParam("message_id"));
-       // Message messageFromDb = messageService.getAllMessagesbyMessageID(messageId);
-        Message deletedMessage = messageService.deleteMessage(messageId);
-        if (deletedMessage == null) {
-            ctx.status(200);
-        } else { 
-            ctx.json(mapper.writeValueAsString(deletedMessage));
-            ctx.status(200);
-        }    
-     } 
+        // be empty.  
+        private void deleteMessageIDHandler(Context ctx) throws JsonProcessingException {
+            int message_id = Integer.parseInt(ctx.pathParam("message_id"));
+            Message checkForMessage = messageService.getAllMessagesbyMessageID(message_id);
+            messageService.deleteMessage(Integer.parseInt(ctx.pathParam("message_id")));
+            if(checkForMessage != null){
+            ctx.json(checkForMessage);
+            ctx.status(200);     
+            } else{
+                ctx.status(200);     
+            }
+        }
+}
+
+
+
+ 
          
-    }
-} 
+    
+
+
     
 
